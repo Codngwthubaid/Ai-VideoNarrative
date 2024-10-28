@@ -1,0 +1,10 @@
+Components Name which we want to build : 
+<Banner/>
+<Divider/>
+<HowItWorks/>
+<Divider/>
+<Pricing/>
+<Divider/>
+<Footer/>
+
+S1 : Creates a Banner file inside the home folder
