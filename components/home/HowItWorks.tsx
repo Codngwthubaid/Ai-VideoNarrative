@@ -1,11 +1,11 @@
-import { Brain, BrainCircuit, Clapperboard, MoveRight, NotebookPen } from "lucide-react";
+import { Brain, MoveRight } from "lucide-react";
 
 export default function HowItWorks() {
     return (
         <div className="py-24 relative overflow-hidden">
             <div className="flex flex-col justify-center items-center gap-y-10 w-full">
                 <div><h2 className="font-bold uppercase text-xl text-purple-600">How it's works</h2></div>
-                <div><h3 className="mb-24 font-bold">Easily repurpose your content into SEO focused blog posts</h3></div>
+                <div><h3 className="mb-24 font-bold text-center">Easily repurpose your content into SEO focused blog posts</h3></div>
             </div>
             <div className="flex justify-center items-center gap-4 lg:gap-24">
                 <div className="flex flex-col gap-4">
