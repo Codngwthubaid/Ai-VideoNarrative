@@ -26,6 +26,11 @@ export default function Home() {
         <div>
           <Pricing />
         </div>
+        <div className="flex items-center justify-center">
+          <Dot className="text-purple-400" />
+          <Dot className="text-purple-400" />
+          <Dot className="text-purple-400" />
+        </div>
       </main>
     </>
   );

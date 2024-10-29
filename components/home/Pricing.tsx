@@ -40,7 +40,7 @@ export default function Pricing() {
                 <div><h3 className="mb-24 font-bold text-center">Choose the Perfect Plan for Your Content Creation Needs</h3></div>
             </div>
             </div>
-            <div className="relative flex justify-center flex-col items-center lg:flex-row gap-8 lg:items-stretch">
+            <div className="px-12 pb-12 lg:pb-24 relative flex justify-center flex-col items-center lg:flex-row gap-8 lg:items-stretch">
                 {plansMap.map(({ name, description, price, items , id}, idx) => 
                 <div className="relative w-full max-w-lg" key={idx}>
                     <div className={cn("relative flex flex-col h-full gap-4 lg:gap-8 p-8 z-10 rounded-2xl border-gray-500/20 border", id === "pro" && "border-violet-500 gap-5 border-2")}>

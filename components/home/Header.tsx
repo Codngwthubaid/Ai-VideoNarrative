@@ -11,13 +11,13 @@ const Navlink = ({ href, children }: { href: string; children: React.ReactNode }
 
 export default function Header() {
     return (
-        <nav className='container flex justify-between items-center px-8 py-4 mx-auto'>
+        <nav className='container flex justify-between items-center px-12 py-4 mx-auto'>
             <div className='flex lg:flex-1'>
                 <Navlink href="/">
                     <span className='flex items-center gap-2 shrink-0'>
                         <Signature className='hover:rotate-12 transform transition duration-200 ease-in-out' />
                     </span>
-                    <span className='font-extrabold text-lg'>NU-VideoNarrative</span>
+                    <span className='font-bold text-lg'>NU-VideoNarrative</span>
                 </Navlink>
             </div>
             <div className='flex lg:justify-center gap-2 lg:gap-12 lg:items-center'>
