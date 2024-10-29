@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Signature } from 'lucide-react'
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 
 const Navlink = ({ href, children }: { href: string; children: React.ReactNode }) => {
     return (
@@ -22,13 +23,22 @@ export default function Header() {
             </div>
             <div className='flex lg:justify-center gap-2 lg:gap-12 lg:items-center'>
                 <Navlink href="/#pricing">Pricing</Navlink>
-                <Navlink href="/#posts">Your Post</Navlink>
+                <SignedIn>
+                    <Navlink href="/#posts">Your Post</Navlink>
+                </SignedIn>
             </div>
             <div className='flex lg:flex-1 lg:justify-end gap-2'>
-                <div className='flex gap-2 items-center'>
-                    <Navlink href='/dashboard'>Upload a Video</Navlink>
-                </div>
-                <Navlink href='/sign-in'>Sign In</Navlink>
+                <SignedIn>
+                    <div className='flex gap-2 items-center'>
+                        <Navlink href='/dashboard'>Upload a Video</Navlink>
+                        <UserButton />
+                    </div>
+                </SignedIn>
+                <SignedOut>
+                    <SignInButton>
+                        <Navlink href='/sign-in'>Sign In</Navlink>
+                    </SignInButton>
+                </SignedOut>
             </div>
         </nav>
     )
