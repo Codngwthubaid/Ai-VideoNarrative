@@ -46,6 +46,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { z } from "zod"
 import { useToast } from "@/hooks/use-toast"
+import { useUploadThing } from "@/utils/uploadthing";
 
 const schema = z.object({
     file: z
@@ -58,8 +59,11 @@ const schema = z.object({
 })
 
 export default function UploadFunc() {
+    const { startUpload } = useUploadThing("videoORAudioUploader")
     const { toast } = useToast()
     const [file, setFile] = useState<File | null>(null)
+
+
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
