@@ -4,9 +4,8 @@ import { UploadThingError } from "uploadthing/server";
 
 const f = createUploadthing();
 
-
 export const ourFileRouter = {
-    videoORAudioUploader: f({ video: { maxFileSize: "4MB" } })
+    videoORAudioUploader: f({ video: { maxFileSize: "32MB" } })
 
         .middleware(async ({ req }) => {
             const user = await currentUser()
