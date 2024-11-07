@@ -59,9 +59,19 @@ const schema = z.object({
 })
 
 export default function UploadFunc() {
-    const { startUpload } = useUploadThing("videoORAudioUploader")
     const { toast } = useToast()
     const [file, setFile] = useState<File | null>(null)
+    const { startUpload } = useUploadThing("videoORAudioUploader", {
+        onClientUploadComplete: () => {
+            toast({title: "No file selected"})
+        },
+        onUploadError: () => {
+            alert("Error occurred while uploading");
+        },
+        onUploadBegin: () => {
+            alert("upload has begun");
+        },
+    },)
 
 
 
@@ -71,7 +81,7 @@ export default function UploadFunc() {
         }
     }
 
-    const handleTranscribe = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleTranscribe = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
         if (!file) {
@@ -96,6 +106,11 @@ export default function UploadFunc() {
             // File is valid, proceed with transcription
             console.log("File is valid, proceeding with transcription")
             // Add your transcription logic here
+        }
+
+        if (file) {
+            const response = await startUpload([file])
+            console.log({response});
         }
     }
 
