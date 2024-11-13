@@ -81,7 +81,7 @@ export default function UploadFunc() {
             })
             
             const result = await transcribeUploadFile(response)
-            console.log(response);
+            console.log(result);
 
         }
     }

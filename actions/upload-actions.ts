@@ -1,10 +1,19 @@
 "use server"
+import { OpenAI } from 'openai'; 
+const apiKey: string | undefined = process.env.OPENAI_API_KEY;
 
-import { date } from "zod"
+if (!apiKey) {
+    throw new Error("API key is not defined.");
+}
 
+const openai = new OpenAI({
+    apiKey: apiKey
+});
+
+// You can now use the openai instance to make API calls
 async function transcribeUploadFile(
     response: {
-        serverData: { userID: string, file: File }
+        serverData: { userID: string, file: any }
     }[]
 ) {
     if (!response) {
@@ -24,8 +33,6 @@ async function transcribeUploadFile(
             }
         }
     } = response[0]
-    // const userID = response[0].serverData.userID
-    // const file = response[0].serverData.userID
 
     if (!fileUrl || !fileName) {
         return {
@@ -35,4 +42,15 @@ async function transcribeUploadFile(
         }
     }
 
+    const fileURL = await fetch(fileUrl)
+
+    try {
+        const transcriptions = await openai.audio.transcriptions.create({
+            model: "whisper-1",
+            file: fileURL
+        })
+    } catch (error) {
+        console.log(error);
+        
+    }
 }
