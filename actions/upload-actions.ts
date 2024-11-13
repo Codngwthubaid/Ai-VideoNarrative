@@ -87,10 +87,23 @@ export async function generateBlogPostAction(
         const completion = await openai.chat.completions.create({
             model: "gpt-4o",
             messages: [
-                { role: "system", content: "You are a helpful assistant." },
+                { role: "system", content: "You are a skill content writer that convets sudio transcriptions into well-structure, engaging blog posts in Markdown format. Create a comprehensive blog post with a catcny title, Introduction main body with multipe sections and a conclusion. Analyed the user's writing from their previous post and emukale their tone and style in the new post, Keep the causal and professional" },
                 {
                     role: "user",
-                    content: "Write a haiku about recursion in programming.",
+                    content: `Here are some of my previous blog posts for reference: 
+Please convert the following transcription into a well-structured blog post using Markdown formatting. Follow this structure:
+
+1. Start with a SEO friendly catchy title on the first line.
+2. Add two newlines after the title.
+3. Write an engaging introduction paragraph.
+4. Create multiple sections for the main content, using appropriate headings (##, ###).
+5. Include relevant subheadings within sections if needed.
+6. Use bullet points or numbered lists where appropriate.
+7. Add a conclusion paragraph at the end.
+8. Ensure the content is informative, well-organized, and easy to read.
+9. Emulate my writing style, tone, and any recurring patterns you notice from my previous posts.
+
+Here's the transcription to convert: ${transcriptions}`,
                 },
             ],
         });
