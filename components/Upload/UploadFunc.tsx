@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { z } from "zod"
 import { useToast } from "@/hooks/use-toast"
 import { useUploadThing } from "@/utils/uploadthing";
+import { transcribeUploadFile } from "@/actions/upload-actions"
 
 const schema = z.object({
     file: z
@@ -65,7 +66,7 @@ export default function UploadFunc() {
         }
 
         if (file) {
-            const response = await startUpload([file])
+            const response:any = await startUpload([file])
             console.log({ response });
 
             if (!file) {
@@ -82,7 +83,25 @@ export default function UploadFunc() {
             
             const result = await transcribeUploadFile(response)
             console.log(result);
+            const {data = null , message = null} = result || {}
 
+            if (!result || !message) {
+                toast({
+                    title : "An unexpected error occurred ...",
+                    description: "An error occurred during transcripting. Please try again "
+                })
+            }
+
+            if (data) {
+                toast({
+                    title: "Generating AI powered result ...",
+                    description: "Please wait a while, we are working to generate your result"
+                })
+                await generateBlogPostAction({
+                    transcriptions: data.transcriptions,
+                    userID: data.userID 
+            })
+            }
         }
     }
 
