@@ -18,13 +18,13 @@ export default function UploadFunc() {
     const [file, setFile] = useState<File | null>(null)
     const { startUpload } = useUploadThing("VideoORAudioUploader", {
         onClientUploadComplete: () => {
-            toast({title: "uploaded successfully!"});
+            toast({ title: "Uploaded successfully!" });
         },
         onUploadError: () => {
-            alert("error occurred while uploading");
+            alert("Error occurred while uploading");
         },
         onUploadBegin: () => {
-            alert("upload has begun");
+            toast({ title: "Upload has begun!" });
         },
     },)
 
@@ -66,6 +66,21 @@ export default function UploadFunc() {
 
         if (file) {
             const response = await startUpload([file])
+            console.log({ response });
+
+            if (!file) {
+                toast({
+                    title: "Something went wrong",
+                    variant: "destructive",
+                    description: "Please use a different file",
+                })
+            }
+            toast({
+                title: "Transcription is in progress ...",
+                description: " Converting audio to text for better accessibility and accurate documentation of information."
+            })
+            
+            const result = await transcribeUploadFile(response)
             console.log(response);
 
         }
