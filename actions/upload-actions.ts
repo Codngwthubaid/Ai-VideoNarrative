@@ -76,21 +76,14 @@ export async function transcribeUploadFile(
     }
 }
 
-export async function generateBlogPostAction(
-    { transcriptions, userID }
-        : {
-            transcriptions: { text: string };
-            userID: string
-        }
-) {
-    if (transcriptions) {
-        const completion = await openai.chat.completions.create({
-            model: "gpt-4o",
-            messages: [
-                { role: "system", content: "You are a skill content writer that convets sudio transcriptions into well-structure, engaging blog posts in Markdown format. Create a comprehensive blog post with a catcny title, Introduction main body with multipe sections and a conclusion. Analyed the user's writing from their previous post and emukale their tone and style in the new post, Keep the causal and professional" },
-                {
-                    role: "user",
-                    content: `Here are some of my previous blog posts for reference: 
+async function generateBlogPost({ userPosts, transcriptions }: { userPosts: string, transcriptions: string }) {
+    const completion = openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+            { role: "system", content: "You are a skill content writer that convets sudio transcriptions into well-structure, engaging blog posts in Markdown format. Create a comprehensive blog post with a catcny title, Introduction main body with multipe sections and a conclusion. Analyed the user's writing from their previous post and emukale their tone and style in the new post, Keep the causal and professional" },
+            {
+                role: "user",
+                content: `Here are some of my previous blog posts for reference: ${userPosts}
 Please convert the following transcription into a well-structured blog post using Markdown formatting. Follow this structure:
 
 1. Start with a SEO friendly catchy title on the first line.
@@ -104,10 +97,34 @@ Please convert the following transcription into a well-structured blog post usin
 9. Emulate my writing style, tone, and any recurring patterns you notice from my previous posts.
 
 Here's the transcription to convert: ${transcriptions}`,
-                },
-            ],
-        });
+            },
+        ],
+    });
+}
 
-        console.log(completion.choices[0].message);
+export async function generateBlogPostAction(
+    { transcriptions, userID }
+        : {
+            transcriptions: { text: string };
+            userID: string
+        }
+) {
+    const userPosts = []
+    if (transcriptions) {
+        const blogPost = await generateBlogPost({
+            userPosts,
+            transcriptions: transcriptions.text
+        })
+
+        console.log({ blogPost });
+
+        if (!blogPost) {
+            return {
+                success: false,
+                message: "Blog post generation failed ...",
+            }
+            // console.log(completion.choices[0]);
+            // let content = completion.choices[0].message.content
+        }
     }
 }
